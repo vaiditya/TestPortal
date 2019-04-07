@@ -1,0 +1,12 @@
+ul {
+  list-style:none;
+}
+.optionClass1{
+  background-color: rgb(156, 248, 248);
+}
+.optionClass2{
+  background-color: rgb(89, 218, 72);
+}
+.optionClass3{
+  background-color: rgb(187, 18, 18);
+}
