@@ -1,53 +1,57 @@
 import React, { Component } from 'react';
 import {BrowserRouter,Route,Switch,NavLink} from 'react-router-dom';
+import H from './web/containers/Home';
 
 import './App.css';
 
 
 class App extends Component {
-  constructor(props){
-    super(props);
+  // constructor(props){
+  //   super(props);
 
-    this.data=[
-                {question:'question1',option1:'opt1',option2:'opt2',option3:'opt3',
-                option4:'opt4',correct:'opt2',submitted:null,status:null},
+  //   this.data=[
+  //               {question:'question1',option1:'opt1',option2:'opt2',option3:'opt3',
+  //               option4:'opt4',correct:'opt2',submitted:null,status:null},
 
-                {question:'question2',option1:'opt1',option2:'opt2',option3:'opt3',
-                option4:'opt4',correct:'opt1',submitted:null,status:null},
+  //               {question:'question2',option1:'opt1',option2:'opt2',option3:'opt3',
+  //               option4:'opt4',correct:'opt1',submitted:null,status:null},
 
-                {question:'question3',option1:'opt1',option2:'opt2',option3:'opt3',
-                option4:'opt4',correct:'opt4',submitted:null,status:null}
-              ];
-    this.updateStatus=this.updateStatus.bind(this);
-    this.handleSubmit=this.handleSubmit.bind(this);
-    this.state={displayQuestion:true,displayResult:false};
-  }
-  updateStatus(index,marked,status){
-    this.data[index].submitted=marked;
-    this.data[index].status=status;
+  //               {question:'question3',option1:'opt1',option2:'opt2',option3:'opt3',
+  //               option4:'opt4',correct:'opt4',submitted:null,status:null}
+  //             ];
+  //   this.updateStatus=this.updateStatus.bind(this);
+  //   this.handleSubmit=this.handleSubmit.bind(this);
+  //   this.state={displayQuestion:true,displayResult:false};
+  // }
+  // updateStatus(index,marked,status){
+  //   this.data[index].submitted=marked;
+  //   this.data[index].status=status;
 
-  }
-  handleSubmit(){
-    //return <Summary data={this.data}/>;
-    this.setState({
-      displayResult:true,
-      displayQuestion:false
-    })
-  }
+  // }
+  // handleSubmit(){
+  //   //return <Summary data={this.data}/>;
+  //   this.setState({
+  //     displayResult:true,
+  //     displayQuestion:false
+  //   })
+  // }
 
 
   render() {
     return (
-      <div className="App">
-        {this.state.displayQuestion?
-        <DisplayQuestionPaper data={this.data}
-        updateData={this.updateStatus}
-        />:null}
+
+      
+      // <div className="App">
+      //   {this.state.displayQuestion?
+      //   <DisplayQuestionPaper data={this.data}
+      //   updateData={this.updateStatus}
+      //   />:null}
         
-        <input type="button" value="clicl me" onClick={this.handleSubmit}/>
-        {this.state.displayResult?<Summary data={this.data}/>:null}
+      //   <input type="button" value="clicl me" onClick={this.handleSubmit}/>
+      //   {this.state.displayResult?<Summary data={this.data}/>:null}
         
-      </div>
+      // </div>
+      <H/>
     );
   }
 }
