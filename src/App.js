@@ -50,8 +50,8 @@ class QuestionPaper extends Component {
   }
 	getResponse = (id1,response) => {
 		console.log(id1)
-		console.log(data.findIndex(id => id === "q2"))
-		//data[data.findIndex(id => id === id1)].response=response;
+		console.log(data.findIndex(id => id.id === id1))
+		data[data.findIndex(id => id.id === id1)].response=response;
 		console.log(data)
 	}
 
@@ -91,7 +91,7 @@ class QustionPalette extends Component {
     response:0
   };
 
-  componentDidMount(){
+  componentDidUpdate(){
 	this.props.getResponse(this.props.id,this.state.response);
   }
 
