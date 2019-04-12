@@ -5,47 +5,10 @@ import React, {Component} from 'react';
 
 
 class App extends Component {
-  constructor(props){
-	super(props);
-	this.state={
-		data:[
-		{ id : 'q1', question:'question1',option1:'opt1',option2:'opt2',option3:'opt3',
-		option4:'opt4',correct:'opt2',response:0,review:false},
-		
-		{ id : 'q2', question:'question2',option1:'opt1',option2:'opt2',option3:'opt3',
-		option4:'opt4',correct:'opt2',response:0,review:false},
-		
-		{id : 'q3', question:'question3',option1:'opt1',option2:'opt2',option3:'opt3',
-		option4:'opt4',correct:'opt2',response:0,review:false},
-		
-		{id : 'q4', question:'question4',option1:'opt1',option2:'opt2',option3:'opt3',
-		option4:'opt4',correct:'opt2',response:0,review:false},
-		
-		{id : 'q5', question:'question5',option1:'opt1',option2:'opt2',option3:'opt3',
-		option4:'opt4',correct:'opt2',response:0,review:false},
-		
-		{id : 'q6', question:'question6',option1:'opt1',option2:'opt2',option3:'opt3',
-		option4:'opt4',correct:'opt2',response:0,review:false},
-		]
-	};
-  }
-	getResponse = (Id,response) => {
-		this.state.data[this.state.data.findIndex(element => element.id === Id)].response=response;
-	}
-	getReviewStatus = (Id,review) => {
-		this.state.data[this.state.data.findIndex(element => element.id === Id)].review=review;	
-	}
-	
-
-
 	render(){
 		return(
 		<div>
-			<QuestionPaper 
-				content={this.state.data} 
-				getResponse={this.getResponse}
-				getReviewStatus={this.getReviewStatus}
-				/>
+			<QuestionPaper />
 		</div>
 		);
 	}
@@ -55,32 +18,76 @@ class QuestionPaper extends Component {
   constructor(props){
 	super(props);
 	this.state={
-		marked:'all'
-		}
+		content:[
+						{ id : 'q1', question:'question1',option1:'opt1',option2:'opt2',option3:'opt3',
+						option4:'opt4',correct:'opt2',response:0,review:false},
+						
+						{ id : 'q2', question:'question2',option1:'opt1',option2:'opt2',option3:'opt3',
+						option4:'opt4',correct:'opt2',response:0,review:false},
+						
+						{id : 'q3', question:'question3',option1:'opt1',option2:'opt2',option3:'opt3',
+						option4:'opt4',correct:'opt2',response:0,review:false},
+						
+						{id : 'q4', question:'question4',option1:'opt1',option2:'opt2',option3:'opt3',
+						option4:'opt4',correct:'opt2',response:0,review:false},
+						
+						{id : 'q5', question:'question5',option1:'opt1',option2:'opt2',option3:'opt3',
+						option4:'opt4',correct:'opt2',response:0,review:false},
+						
+						{id : 'q6', question:'question6',option1:'opt1',option2:'opt2',option3:'opt3',
+						option4:'opt4',correct:'opt2',response:0,review:false},
+						],	
+					marked:'all',
+				
+							
+	};
+  }
+	getResponse = (Id,response) => {
+		let index=this.state.content.findIndex(element => element.id === Id);
+		let arr=this.state.content;
+		arr[index].response=response;
+		this.setState({
+			content:arr
+		})
+	}//spread operator??
+	getReviewStatus = (Id,review) => {
+		let index=this.state.content.findIndex(element => element.id === Id);
+		let arr=this.state.content;
+		arr[index].review=review;
+		this.setState({
+			content:arr
+		})
 	}
+	onReset = (Id) => {
+		let index=this.state.content.findIndex(element => element.id === Id);
+		let arr=this.state.content;
+		arr[index].review=false;
+		arr[index].response=0;
+		this.setState({
+			content:arr
+		})
+	}
+
   
 
   getFilter = (markedFilter) => {
+	setTimeout(()=>
 	this.setState({
 		marked:markedFilter
-	});
+	}),3000);
   }
 	
 	render(){
 		
-		const { content } = this.props;
-		const { marked } = this.state;
-		let updatedContent =[];
-		console.log(this.state.marked)
+		const { content,marked} = this.state;
+		let updatedContent=[];
+
 		switch(marked){
 			case "mark":
 				updatedContent=content.filter( element => (element.response !==0 && !element.review ))
 				break;
 			case "unmark":
-				updatedContent=content.filter( element => (element.response === 0 && !element.review )).map(function(element){
-						return ({...element,response:0})
-					}
-				)
+				updatedContent=content.filter( element => (element.response === 0 && !element.review ))
 				break;
 			case "review":
 				updatedContent=content.filter( element => ( element.review ))
@@ -90,8 +97,7 @@ class QuestionPaper extends Component {
 				break;
 
 		}
-		console.log(this.props.content)
-		
+		console.log(this.state.content)
 		console.log(updatedContent)
 		return(
 		<div>
@@ -100,8 +106,9 @@ class QuestionPaper extends Component {
 					<QustionPalette 
 						id={element.id}
 						questionContent={element}
-						getResponse={this.props.getResponse}
-						getReviewStatus={this.props.getReviewStatus}
+						getResponse={this.getResponse}
+						getReviewStatus={this.getReviewStatus}
+						onReset={this.onReset}
 					/>)}
 				
 			</div>
@@ -164,8 +171,9 @@ constructor(props){
   componentDidUpdate(){
 	
 	//this.props.getResponse(this.props.id,this.state.response);
-	this.props.getReviewStatus(this.props.id,this.state.review);
-  }
+	// this.props.getReviewStatus(this.props.id,this.state.review);
+	}
+	
 
   handleOptChange = (event) => {
 		let id=event.target.id;
@@ -178,9 +186,10 @@ constructor(props){
   }
 
   handleReview = (event) => {
+		console.log(event.target.checked)
 		this.setState({
 			review:event.target.checked
-		})
+		},()=>this.props.getReviewStatus(this.props.id,this.state.review))
   }
 
   handleReset = () => {
@@ -188,33 +197,33 @@ constructor(props){
 			checked:'0',
 			response:null,
 			review:false
-		});
+		},()=>this.props.onReset(this.props.id));
   }
   render(){
-	console.log(this.props)
+	
 	const { id,questionContent } = this.props;
-	console.log(id,this.state.checked);
+	
     return(
       <div>
         <ul>
             <li>{questionContent.question}</li>
             <label>
-              <input id='1' type="radio" onChange={this.handleOptChange} checked={this.state.checked==='1'}/>
+              <input id='1' type="radio" onChange={this.handleOptChange} checked={questionContent.response===1}/>
               {questionContent.option1}
             </label>
             <label>
-              <input id='2' type="radio"  onChange={this.handleOptChange} checked={this.state.checked==='2'}/>
-              {questionContent.option2}
+              <input id='2' type="radio"  onChange={this.handleOptChange} checked={questionContent.response===2}/>
+							{questionContent.option2}
             </label>
             <label>
-              <input id='3' type="radio" onChange={this.handleOptChange} checked={this.state.checked==='3'} />
+              <input id='3' type="radio" onChange={this.handleOptChange} checked={questionContent.response===3} />
               {questionContent.option3}
             </label>
             <label>
-              <input id='4' type="radio" onChange={this.handleOptChange} checked={this.state.checked==='4'} />
+              <input id='4' type="radio" onChange={this.handleOptChange} checked={questionContent.response==4} />
               {questionContent.option4}
             </label>
-			<input id={id} type="checkbox" onChange={this.handleReview} checked={this.state.review}/>Mark for review
+			<input id={id} type="checkbox" onChange={this.handleReview} checked={questionContent.review}/>Mark for review
 			<input id={id} type="button"  value="Reset" onClick={this.handleReset} />
        </ul>
       </div>
