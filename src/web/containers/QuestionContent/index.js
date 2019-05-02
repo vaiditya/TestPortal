@@ -53,6 +53,7 @@ class QuestionContent extends Component {
 				disableNext={disableNext}
 				onPrevious={this.onPrevious}
 				disablePrevious={disablePrevious}
+				clearResponse={true}
 				/>
           </div>
         );

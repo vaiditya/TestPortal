@@ -9,23 +9,17 @@ class QuestionPaper extends Component {
       super(props);
       this.state={
           paperDetails:[
-                          { id : 'q1', question:'question1', options:{option1:'opt1',option2:'opt2',option3:'opt3',
-                          option4:'opt4'},correct:'opt2',response:0,review:false},
+                          {id : 'q1', question:'question1',options:['opt1','opt2','opt3','opt4'],correct:'opt2',response:0,review:false},
                           
-                          { id : 'q2', question:'question2',options:{option1:'opt1',option2:'opt2',option3:'opt3',
-                          option4:'opt4'},correct:'opt2',response:0,review:false},
+                          {id : 'q2', question:'question2',options:['opt1','opt2','opt3','opt4'],correct:'opt2',response:0,review:false},
                           
-                          {id : 'q3', question:'question3',options:{option1:'opt1',option2:'opt2',option3:'opt3',
-                          option4:'opt4'},correct:'opt2',response:0,review:false},
+                          {id : 'q3', question:'question3',options:['opt1','opt2','opt3','opt4'],correct:'opt2',response:0,review:false},
                           
-                          {id : 'q4', question:'question4',options:{option1:'opt1',option2:'opt2',option3:'opt3',
-                          option4:'opt4'},correct:'opt2',response:0,review:false},
+                          {id : 'q4', question:'question4',options:['opt1','opt2','opt3','opt4'],correct:'opt2',response:0,review:false},
                           
-                          {id : 'q5', question:'question5',options:{option1:'opt1',option2:'opt2',option3:'opt3',
-                          option4:'opt4'},correct:'opt2',response:0,review:false},
+                          {id : 'q5', question:'question5',options:['opt1','opt2','opt3','opt4'],correct:'opt2',response:0,review:false},
                           
-                          {id : 'q6', question:'question6',options:{option1:'opt1',option2:'opt2',option3:'opt3',
-                          option4:'opt4'},correct:'opt2',response:0,review:false},
+                          {id : 'q6', question:'question6',options:['opt1','opt2','opt3','opt4'],correct:'opt2',response:0,review:false},
                           ],	
                       marked:'all',
                   

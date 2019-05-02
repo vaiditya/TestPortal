@@ -5,21 +5,46 @@ class QuestionPalette extends Component {
     constructor(props){	
             super(props);
                 this.state ={
-                    checked:'0',
-                    response:null,
-                    review:false
+                    
+                    currentSelection:99,
                 };
             }
+    toggleOption = (event) => {
+        const index=Number(event.target.id)
+        this.setState({
+            currentSelection:index
+        })
+    }
+    onNext = () => {
+        this.setState({
+            currentSelection:99,
+        })
+        this.props.onNext();
+    }
+    onPrevious = () => {
+        this.setState({
+            currentSelection:99,
+        })
+        this.props.onPrevious();
+    }
 
-
+    
       render(){
         
-        const { questionSchema, onNext , onPrevious } = this.props;
-        
+        const { questionSchema, clearResponse } = this.props;
+        console.log("",this.state)
         return(
           <div>
               {questionSchema.question}
-              
+              <ul>
+              {questionSchema.options.map( (element,index) => {
+                  return (
+                        <li key={index}> 
+                            <input id={index} type="radio" onChange={this.toggleOption} checked={this.state.currentSelection===index}/>{element} 
+                        </li>
+                        );
+              })}
+              </ul>
             {/* <ul>
                 <li>{questionContent.question}</li>
                 <label>
@@ -42,8 +67,8 @@ class QuestionPalette extends Component {
                 <input id={id} type="button"  value="Reset" onClick={this.handleReset} />
            </ul> */}
                 <div>
-                    <input type="button" value="Next" disabled={this.props.disableNext} onClick={()=>{onNext()}}/>
-                    <input type="button" value="Previous" disabled={this.props.disablePrevious} onClick={()=>{onPrevious()}}/>
+                    <input type="button" value="Next" disabled={this.props.disableNext} onClick={this.onNext}/>
+                    <input type="button" value="Previous" disabled={this.props.disablePrevious} onClick={this.onPrevious}/>
                 </div>
             
           </div>
