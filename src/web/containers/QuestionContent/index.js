@@ -19,27 +19,38 @@ class QuestionContent extends Component {
 				disablePrevious:true
 			})
 		}
-    onNext = ( selectedOption ) => {
-			console.log(selectedOption)
+
+    onNext = ( selectedOption , reviewFlag ) => {
+		//check if response is currently given 
 		if ( selectedOption !== 99 ) {
+
+			//check if response was not given previously 
 			if ( !this.props.questions[this.state.currentQuestionId].response ) {
 				this.props.questions[this.state.currentQuestionId].options[selectedOption].marked=true;
 				this.props.questions[this.state.currentQuestionId].response=true;
-			} else {
+			} 
+
+			//check if response was given previously and now has been changed
+			else {
 				const index = this.props.questions[this.state.currentQuestionId].options.findIndex( element => element.marked );
 				this.props.questions[this.state.currentQuestionId].options[index].marked=false;
 				this.props.questions[this.state.currentQuestionId].options[selectedOption].marked=true;
 				this.props.questions[this.state.currentQuestionId].response=true;
 			}
-		} else {
+		} 
+
+		//check if response is not currently given
+		else {
 			this.props.questions[this.state.currentQuestionId].response=false;
 			this.props.questions[this.state.currentQuestionId].options=
 			this.props.questions[this.state.currentQuestionId].options.map( element => {
 				return { ...element , marked:false }
 			});
 		}
-		console.log(this.props.questions[this.state.currentQuestionId].response)
 
+		//update review status
+		this.props.questions[this.state.currentQuestionId].review=reviewFlag;
+		
 		//Switch to next Question
 		if( this.state.currentQuestionId + 1 < this.props.questions.length )
 			this.setState({
@@ -57,25 +68,37 @@ class QuestionContent extends Component {
 
     }
 
-    onPrevious= ( selectedOption ) => {
-
+    onPrevious= ( selectedOption , reviewFlag ) => {
+		
+		//check if response is currently given
 		if ( selectedOption !== 99 ) {
+
+			//check if response was not given previously
 			if ( !this.props.questions[this.state.currentQuestionId].response ) {
 				this.props.questions[this.state.currentQuestionId].options[selectedOption].marked=true;
 				this.props.questions[this.state.currentQuestionId].response=true;
-			} else {
+			} 
+
+			//check if response was given previously and now has been changed
+			else {
 				const index = this.props.questions[this.state.currentQuestionId].options.find( element => element.marked );
 				this.props.questions[this.state.currentQuestionId].options[index].marked=false;
 				this.props.questions[this.state.currentQuestionId].options[selectedOption].marked=true;
 				this.props.questions[this.state.currentQuestionId].response=true;
 			}
-		} else {
+		} 
+		
+		//check if response is not currently given
+		else {
 			this.props.questions[this.state.currentQuestionId].response=false;
 			this.props.questions[this.state.currentQuestionId].options=
 			this.props.questions[this.state.currentQuestionId].options.map( element => {
 				return {...element , marked:false }
 			});
 		}
+
+		//update review status
+		this.props.questions[this.state.currentQuestionId].review=reviewFlag;
 
 		//Switch to previous question
 		if ( this.state.currentQuestionId - 1 >= 0)
@@ -105,7 +128,7 @@ class QuestionContent extends Component {
 								disableNext={disableNext}
 								onPrevious={this.onPrevious}
 								disablePrevious={disablePrevious}
-								clearResponse={true}
+								
 				/>
           </div>
         );
